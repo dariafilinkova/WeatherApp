@@ -1,5 +1,7 @@
 package com.example.weatherapp.ui.current_weather
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
@@ -43,13 +45,16 @@ class CurrentWeatherFragment : Fragment() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        registerPermissionListener()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = CurrentWeatherFragmentBinding.inflate(inflater, container, false)
-        registerPermissionListener()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
         return binding.root
@@ -129,6 +134,7 @@ class CurrentWeatherFragment : Fragment() {
         ) {
             return true
         }
+        Toast.makeText(context, "Please turn on location in settings", Toast.LENGTH_SHORT).show()
         return false
     }
 
@@ -138,6 +144,11 @@ class CurrentWeatherFragment : Fragment() {
                 if (isGranted) {
                     Log.i("DEBUG", "permission granted")
                 } else {
+                    Toast.makeText(
+                        context,
+                        "Please turn on location in settings",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Log.i("DEBUG", "permission denied")
                 }
             }
@@ -194,14 +205,14 @@ class CurrentWeatherFragment : Fragment() {
                                 setCoordinates(Pair(latitude, longitude))
                                 addresses = geocoder.getFromLocation(latitude, longitude, 1)
                                 val address: String = addresses.first().countryName.toString()
-                                Log.d("adress",address)
+                                Log.d("adress", address)
                                 binding.countryName.text = address
                                 setCountryName(address)
                             }
                         }
                     }, Looper.getMainLooper())
             }
-        }
+        } else Toast.makeText(context, "Please turn on location", Toast.LENGTH_LONG).show()
 
     }
 
