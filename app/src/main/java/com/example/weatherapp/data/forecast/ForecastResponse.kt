@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.forecast
 
-data class ForecastWeatherResponse(
+data class ForecastResponse(
     val city: City,
     val cnt: Int,
     val cod: String,

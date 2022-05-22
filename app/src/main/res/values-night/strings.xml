@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="country_name">countryName</string>
+    <string name="today_text">Today,</string>
+    <string name="date">September 19</string>
+    <string name="weather_cloud">sunny</string>
 </resources>

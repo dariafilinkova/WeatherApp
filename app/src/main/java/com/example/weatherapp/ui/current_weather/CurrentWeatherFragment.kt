@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.example.weatherapp.API_KEY
@@ -48,46 +49,28 @@ class CurrentWeatherFragment : Fragment() {
         registerPermissionListener()
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
-
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-//        registerPermissionListener()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCurrentLocation()
-        //  val latitude = getLatitude()
-        //  getCurrentLocation()
-//        val lat = arguments!!.getDouble("lon")
-        // Log.d("latt", latitude.toString())
-//        viewModel.getDataOfCountry(
-//            arguments!!.getDouble("lat"),
-//            arguments!!.getDouble("lon"),
-//            API_KEY
-//        )
-//
-        viewModel.weatherInfo.observe(viewLifecycleOwner) { countryData ->
+        viewModel.weatherInfo.observe(viewLifecycleOwner) { weatherData ->
             with(binding) {
-                //countryName.text="ffff"
-                countryName.text = countryData.id.toString()
-//                weatherIcon.apply {
-//                    when (countryData.weather.icon) {
-//                        "01n" -> R.drawable.ic_baseline_sunny
-//                    }
-//                }
-                Log.d("icon", countryData.weather[0].icon)
-//                if(countryData.weather[0].icon == "01n" ){
-//                weatherIcon.setBackgroundResource(R.drawable.ic_baseline_sunny)}
+                Log.d("icon", weatherData.weather[0].icon)
                 weatherIcon.setBackgroundResource(
-                    when (countryData.weather[0].icon) {
+                    when (weatherData.weather[0].icon) {
                         "01n" -> R.drawable.ic_baseline_sunny
                         "02n" -> R.drawable.ic_baseline_home
                         else -> R.drawable.ic_baseline_home
                     }
                 )
-                // countryName.text = countryData.sys.country
-                //countryName.text=countryData.main.temp_max.toString()
+                temperature.text = (weatherData.main.temp - 273.0).toInt().toString()
+                skyDescription.text = weatherData.weather[0].description
+                degrees.isVisible = true
+                cloudDescription.text = weatherData.clouds.all.toString() + "%"
+                humidityDescription.text = weatherData.main.humidity.toString() + "mm"
+                pressureDescription.text = weatherData.main.pressure.toString() + "hPa"
             }
         }
 
@@ -180,15 +163,11 @@ class CurrentWeatherFragment : Fragment() {
                                 Log.d("lat", latitude.toString())
                                 Log.d("lon", longitude.toString())
                                 viewModel.getDataOfCountry(latitude, longitude, API_KEY)
-//                                setCoordinates(longitude,latitude)
-//                                val (a,b) = Pair(latitude,longitude)
-//                                coordinates.add(latitude)
-//                                coordinates.add(longitude)
-                                setCoordinates(Pair(latitude,longitude))
-                                //coordinates.set(1,latitude)
-                                //addresses = geocoder.getFromLocation(latitude.toString(), longitude, 1)
-                                //val address: String = addresses.first().countryName.toString()
-                                //Log.d("country", address)
+                                binding.progressBarLoading.isVisible = false
+                                setCoordinates(Pair(latitude, longitude))
+                                addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                                val address: String = addresses.first().countryName.toString()
+                                binding.countryName.text = address
                             }
                         }
                     }, Looper.getMainLooper())
@@ -197,9 +176,8 @@ class CurrentWeatherFragment : Fragment() {
 
     }
 
-    private fun setCoordinates(coor : Pair<Double,Double>) {
+    private fun setCoordinates(coor: Pair<Double, Double>) {
         setFragmentResult("request_key_lon", bundleOf(("coor" to coor)))
-       //setFragmentResult("request_key_lat", bundleOf(("lat" to lat)))
     }
 
 }

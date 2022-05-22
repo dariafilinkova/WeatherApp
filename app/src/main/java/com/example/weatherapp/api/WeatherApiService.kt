@@ -1,7 +1,9 @@
 package com.example.weatherapp.api
 
 import com.example.weatherapp.data.current_weather.CurrentWeatherResponse
-import com.example.weatherapp.data.forecast.ForecastWeatherResponse
+import com.example.weatherapp.data.forecast.ForecastResponse
+import com.example.weatherapp.data.forecast.OpenWeatherForecastResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -19,6 +21,6 @@ interface WeatherApiService {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") appid: String
-    ): ForecastWeatherResponse
+    ): ForecastResponse
 
 }

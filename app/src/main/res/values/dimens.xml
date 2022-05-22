@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="country_name">28sp</dimen>
+    <dimen name="date">20sp</dimen>
+    <dimen name="temperature">110sp</dimen>
+    <dimen name="cloud">24sp</dimen>
+</resources>
