@@ -11,7 +11,7 @@
         android:id="@+id/countryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/rubikbold"
         android:textColor="@color/white"
         android:textSize="@dimen/country_name"
@@ -21,9 +21,9 @@
 
     <ImageView
         android:id="@+id/weatherIcon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/countryName" />
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="135dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/rectangle_view"
@@ -74,18 +74,18 @@
                 android:id="@+id/todayText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="25dp"
                 android:fontFamily="@font/rubikregular"
                 android:text="@string/today_text"
                 android:textColor="@color/white"
                 android:textSize="@dimen/date" />
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/rubikregular"
-                android:text="@string/date"
                 android:textColor="@color/white"
                 android:textSize="@dimen/date" />
         </LinearLayout>
@@ -104,7 +104,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/rubikregular"
                 android:textColor="@color/white"
-                android:textSize="@dimen/temperature" />
+                android:textSize="@dimen/temperature"
+                android:layout_marginEnd="30dp"/>
 
             <TextView
                 android:id="@+id/degrees"
@@ -126,7 +127,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
         android:fontFamily="@font/rubikregular"
-        android:hint="@string/weather_cloud"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -139,7 +139,7 @@
         android:id="@+id/cloudView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/cloud"
         app:layout_constraintStart_toStartOf="@id/weatherView"
@@ -181,9 +181,11 @@
         android:id="@+id/pressureView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/pressure"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="60dp"
         app:layout_constraintStart_toEndOf="@id/humidityView"
         app:layout_constraintTop_toBottomOf="@id/skyDescription" />
 
@@ -196,5 +198,43 @@
         app:layout_constraintEnd_toEndOf="@id/pressureView"
         app:layout_constraintStart_toStartOf="@id/pressureView"
         app:layout_constraintTop_toBottomOf="@id/pressureView"
+        android:fontFamily="@font/rubiklight"/>
+    <View
+        android:id="@+id/windSpeedView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/wind"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/cloudView"
+        app:layout_constraintTop_toBottomOf="@id/cloudDescription" />
+
+    <TextView
+        android:id="@+id/windSpeedDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/date"
+        app:layout_constraintEnd_toEndOf="@id/windSpeedView"
+        app:layout_constraintStart_toStartOf="@id/windSpeedView"
+        app:layout_constraintTop_toBottomOf="@id/windSpeedView"
+        android:fontFamily="@font/rubiklight"/>
+    <View
+        android:id="@+id/windDirectionView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/wind_duration"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/humidityView"
+        app:layout_constraintTop_toBottomOf="@id/humidityDescription" />
+
+    <TextView
+        android:id="@+id/windDirectionDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/date"
+        app:layout_constraintEnd_toEndOf="@id/windDirectionView"
+        app:layout_constraintStart_toStartOf="@id/windDirectionView"
+        app:layout_constraintTop_toBottomOf="@id/windDirectionView"
         android:fontFamily="@font/rubiklight"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

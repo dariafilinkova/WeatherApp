@@ -34,22 +34,23 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.VERTICAL)
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.addItemDecoration(dividerItemDecoration)
+        binding.forecasts.addItemDecoration(dividerItemDecoration)
         setFragmentResultListener("request_key_lon") { requestKey, bundle ->
-            val coord = bundle.get("coor") as Pair<Double, Double>
-            Log.d("latt", coord.first.toString())
-            Log.d("lon", coord.second.toString())
+            val coordinates = bundle.get("coordinates") as Pair<Double, Double>
+            Log.d("lat", coordinates.first.toString())
+            Log.d("lon", coordinates.second.toString())
             with(binding) {
-                viewModel.getForecastOfCountry(coord, API_KEY)
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = layoutManager
+                viewModel.getForecastOfCountry(coordinates, API_KEY)
+                forecasts.adapter = adapter
+                forecasts.layoutManager = layoutManager
                 viewModel.forecastInfo.observe(viewLifecycleOwner) { forecasts ->
                     adapter.submitList(forecasts)
                     progressBarLoading.isVisible = false
-
                 }
             }
-
+        }
+        setFragmentResultListener("request_key_country_name") { requestKey, bundle ->
+            binding.countryName.text = bundle.get("countryName") as String
         }
     }
 

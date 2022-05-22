@@ -6,81 +6,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="4dp"
+    app:cardBackgroundColor="@color/blue_white"
+    app:strokeColor="@color/blue_white">
+<TextView
+    android:id="@+id/day"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Today"
+    android:visibility="visible"
+    android:textColor="@color/white"
+    android:fontFamily="@font/rubiklight"
+    android:textSize="@dimen/date"
+    android:layout_margin="3dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="?listPreferredItemHeightLarge">
+        android:minHeight="?listPreferredItemHeightLarge"
+        android:layout_marginTop="30dp"
+        android:background="@color/blue_light">
 
         <TextView
-            android:id="@+id/textView_date"
+            android:id="@+id/hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sky_condition"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="1.1.2000" />
+            android:textSize="@dimen/cloud"
+            android:textColor="@color/black"
+            android:text="13:00"
+            android:fontFamily="@font/rubikregular"/>
 
         <TextView
-            android:id="@+id/textView_temperature"
+            android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="8dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="25.0°C" />
+            android:fontFamily="@font/rubikregular"
+            android:textSize="@dimen/temperature_forecast"
+            tools:text="25.0°C"
+            android:textColor="@color/black"/>
 
         <TextView
-            android:id="@+id/textView_condition"
+            android:id="@+id/sky_condition_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintStart_toEndOf="@id/sky_condition"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="Clear" />
+            tools:text="Clear"
+            android:textSize="@dimen/cloud"
+            android:textColor="@color/black"/>
 
-        <ImageView
-            android:id="@+id/imageView_condition_icon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView_temperature"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent="0.15"
-            tools:src="@drawable/ic_baseline_sunny"
-            tools:tint="#f9a920" />
+        <View
+            android:id="@+id/sky_condition"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

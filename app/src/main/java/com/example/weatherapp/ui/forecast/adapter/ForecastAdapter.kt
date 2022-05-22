@@ -21,4 +21,5 @@ class ForecastAdapter : ListAdapter<Forecast, ForecastViewHolder>(DiffUtilForeca
         holder.bindForecast(forecast)
     }
 
+
 }

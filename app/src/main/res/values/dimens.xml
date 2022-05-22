@@ -4,4 +4,5 @@
     <dimen name="date">20sp</dimen>
     <dimen name="temperature">110sp</dimen>
     <dimen name="cloud">24sp</dimen>
+    <dimen name="temperature_forecast">40sp</dimen>
 </resources>

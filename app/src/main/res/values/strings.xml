@@ -3,7 +3,7 @@
     <string name="country_name">countryName</string>
     <string name="loading">Loading</string>
     <string name="bold" tools:ignore="ReferenceType">@font/rubikbold</string>
-    <string name="today_text">Today,</string>
+    <string name="today_text">Updated at </string>
     <string name="date">September 19</string>
     <string name="weather_cloud">sunny</string>
 </resources>

@@ -28,6 +28,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
@@ -57,12 +60,19 @@ class CurrentWeatherFragment : Fragment() {
         getCurrentLocation()
         viewModel.weatherInfo.observe(viewLifecycleOwner) { weatherData ->
             with(binding) {
-                Log.d("icon", weatherData.weather[0].icon)
                 weatherIcon.setBackgroundResource(
                     when (weatherData.weather[0].icon) {
-                        "01n" -> R.drawable.ic_baseline_sunny
-                        "02n" -> R.drawable.ic_baseline_home
-                        else -> R.drawable.ic_baseline_home
+                        "01n" -> R.drawable.moon
+                        "01d" -> R.drawable.sun
+                        "02d", "03d" -> R.drawable.cloudy_day
+                        "02n", "03n" -> R.drawable.cloud_moon
+                        "04d", "04n" -> R.drawable.clouds
+                        "09d", "10d" -> R.drawable.rainy_day
+                        "09n", "10n" -> R.drawable.rainy_night
+                        "11d", "11n" -> R.drawable.thunderstorm
+                        "13d", "13n" -> R.drawable.snow
+                        "50d", "50n" -> R.drawable.fog
+                        else -> R.drawable.default_weather
                     }
                 )
                 temperature.text = (weatherData.main.temp - 273.0).toInt().toString()
@@ -71,6 +81,23 @@ class CurrentWeatherFragment : Fragment() {
                 cloudDescription.text = weatherData.clouds.all.toString() + "%"
                 humidityDescription.text = weatherData.main.humidity.toString() + "mm"
                 pressureDescription.text = weatherData.main.pressure.toString() + "hPa"
+                windSpeedDescription.text =
+                    (weatherData.wind.speed * 3.6).toInt().toString() + "km/h"
+                when (weatherData.wind.deg.toString().toInt()) {
+                    in 0..44 -> windDirectionDescription.text = "N"
+                    360 -> windDirectionDescription.text = "N"
+                    in 45..89 -> windDirectionDescription.text = "NE"
+                    in 90..134 -> windDirectionDescription.text = "E"
+                    in 135..179 -> windDirectionDescription.text = "SE"
+                    in 180..224 -> windDirectionDescription.text = "S"
+                    in 225..269 -> windDirectionDescription.text = "SW"
+                    in 270..314 -> windDirectionDescription.text = "W"
+                    in 315..359 -> windDirectionDescription.text = "SW"
+                }
+                val sdf = SimpleDateFormat("dd.MM.yyyy hh:mm")
+                val currentDate = sdf.format(Date())
+                date.text = currentDate
+                //countryName.text = weatherData.sys.country
             }
         }
 
@@ -86,6 +113,7 @@ class CurrentWeatherFragment : Fragment() {
             getCoordinates()
         } else {
             permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            getCurrentLocation()
         }
     }
 
@@ -157,7 +185,6 @@ class CurrentWeatherFragment : Fragment() {
                                 .removeLocationUpdates(this)
                             if (!locationResult.equals(0) && locationResult.locations.size > 0) {
                                 val locIndex = locationResult.locations.size - 1
-
                                 val latitude = locationResult.locations[locIndex].latitude
                                 val longitude = locationResult.locations[locIndex].longitude
                                 Log.d("lat", latitude.toString())
@@ -167,7 +194,9 @@ class CurrentWeatherFragment : Fragment() {
                                 setCoordinates(Pair(latitude, longitude))
                                 addresses = geocoder.getFromLocation(latitude, longitude, 1)
                                 val address: String = addresses.first().countryName.toString()
+                                Log.d("adress",address)
                                 binding.countryName.text = address
+                                setCountryName(address)
                             }
                         }
                     }, Looper.getMainLooper())
@@ -176,8 +205,12 @@ class CurrentWeatherFragment : Fragment() {
 
     }
 
-    private fun setCoordinates(coor: Pair<Double, Double>) {
-        setFragmentResult("request_key_lon", bundleOf(("coor" to coor)))
+    private fun setCoordinates(coordinates: Pair<Double, Double>) {
+        setFragmentResult("request_key_lon", bundleOf(("coordinates" to coordinates)))
+    }
+
+    private fun setCountryName(countryName: String) {
+        setFragmentResult("request_key_country_name", bundleOf(("countryName" to countryName)))
     }
 
 }
