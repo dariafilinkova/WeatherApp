@@ -3,6 +3,7 @@ package com.example.weatherapp.ui.current_weather
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -99,10 +100,24 @@ class CurrentWeatherFragment : Fragment() {
                     in 270..314 -> windDirectionDescription.text = "W"
                     in 315..359 -> windDirectionDescription.text = "SW"
                 }
-                val sdf = SimpleDateFormat("dd.MM.yyyy hh:mm")
-                val currentDate = sdf.format(Date())
+                val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm a")
+                val currentDate = dateFormat.format(Date())
                 date.text = currentDate
                 //countryName.text = weatherData.sys.country
+                shareButton.setOnClickListener{
+                    val shareString = "The weather forecast in ${countryName.text} for today:\n" +
+                            "The temperature is ${temperature.text} °C\n" +
+                            "Sky description — skyDescription\n" +
+                            "Wind direction is ${windDirectionDescription.text}, speed is ${windSpeedDescription.text} \n" +
+                            "Pressure is ${pressureDescription.text}. \n" +
+                            "Updated at ${date.text}"
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, shareString)
+                        type = "text/plain"
+                    }
+                    startActivity(shareIntent)
+                }
             }
         }
 

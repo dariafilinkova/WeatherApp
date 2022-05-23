@@ -237,4 +237,14 @@
         app:layout_constraintStart_toStartOf="@id/windDirectionView"
         app:layout_constraintTop_toBottomOf="@id/windDirectionView"
         android:fontFamily="@font/rubiklight"/>
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_baseline_share_24"
+        app:layout_constraintBottom_toBottomOf="@id/weatherView"
+        app:layout_constraintEnd_toEndOf="@id/weatherView"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="10dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
